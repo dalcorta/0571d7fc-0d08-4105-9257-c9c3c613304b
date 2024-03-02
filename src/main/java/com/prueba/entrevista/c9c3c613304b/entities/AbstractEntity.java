@@ -6,17 +6,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated", nullable = false)
     private LocalDateTime updated;
 
