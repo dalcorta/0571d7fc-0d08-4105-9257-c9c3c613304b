@@ -22,7 +22,7 @@ public class Product extends AbstractEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "description")
+    @Column(name = "description") 
     private String decription;
 
     @OneToMany(mappedBy = "product")
