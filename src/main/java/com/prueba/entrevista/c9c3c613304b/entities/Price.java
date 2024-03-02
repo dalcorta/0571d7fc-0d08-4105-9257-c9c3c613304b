@@ -13,12 +13,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @AllArgsConstructor
 @Table(name = "price")
-public class Price {
+@EqualsAndHashCode(callSuper = false)
+public class Price extends AbstractEntity{
 
     @Id
     @Column(name = "id")
@@ -46,5 +48,5 @@ public class Price {
 
     @Column(name = "curr")
     private Currency currency;
-    
+
 }

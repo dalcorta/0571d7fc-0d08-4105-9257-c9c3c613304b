@@ -9,12 +9,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @AllArgsConstructor
 @Table(name = "product")
-public class Product {
+@EqualsAndHashCode(callSuper = false)
+public class Product extends AbstractEntity {
 
     @Id
     @Column(name = "id")
@@ -25,5 +27,5 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private Set<Price> prices;
-    
+
 }

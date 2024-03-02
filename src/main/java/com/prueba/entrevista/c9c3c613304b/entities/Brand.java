@@ -9,13 +9,15 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @AllArgsConstructor
 @Table(name = "brand")
-public class Brand {
-    
+@EqualsAndHashCode(callSuper = false)
+public class Brand extends AbstractEntity {
+
     @Id
     @Column(name = "id")
     private Integer id;
