@@ -12,8 +12,10 @@ import com.prueba.entrevista.c9c3c613304b.dtos.PriceDTO;
 import com.prueba.entrevista.c9c3c613304b.dtos.ProductDTO;
 import com.prueba.entrevista.c9c3c613304b.entities.BrandEntity;
 import com.prueba.entrevista.c9c3c613304b.entities.PriceEntity;
+import com.prueba.entrevista.c9c3c613304b.exceptions.PriceNotFoundException;
 import com.prueba.entrevista.c9c3c613304b.repositories.PriceRepository;
 import com.prueba.entrevista.c9c3c613304b.services.PriceService;
+import com.prueba.entrevista.c9c3c613304b.util.PriceMapper;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -21,9 +23,11 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 @Service
+@Transactional
 @AllArgsConstructor
 public class PriceServiceJPAImpl implements PriceService {
 
@@ -31,6 +35,8 @@ public class PriceServiceJPAImpl implements PriceService {
     private final EntityManager entityManager;
 
     private final PriceRepository repository;
+
+    private final PriceMapper mapper;
 
     @Override
     public Collection<PriceDTO> findAll() {
@@ -41,11 +47,17 @@ public class PriceServiceJPAImpl implements PriceService {
     }
 
     @Override
-    public Optional<PriceDTO> findOne(Long id) {
-        return repository.findById(id).map(entity -> new PriceDTO(entity.getId(),
+    public PriceDTO findOne(Long id) {
+        Optional<PriceEntity> existingEntity = repository.findById(id);
+
+        if (existingEntity.isEmpty()) {
+            throw new PriceNotFoundException(id);
+        }
+        
+        return existingEntity.map(entity -> new PriceDTO(entity.getId(),
                 new BrandDTO(entity.getBrand().getId(), entity.getBrand().getDescription()), entity.getStart(),
                 entity.getEnd(), new ProductDTO(entity.getProduct().getId(), entity.getProduct().getDecription()),
-                entity.getPriority(), entity.getPrice(), entity.getCurrency()));
+                entity.getPriority(), entity.getPrice(), entity.getCurrency())).get();
     }
 
     @Override
@@ -80,10 +92,22 @@ public class PriceServiceJPAImpl implements PriceService {
     }
 
     @Override
-    public void save(PriceDTO entity) {
-        repository.save(new PriceEntity().setId(entity.id()).setBrand(new BrandEntity().setId(entity.brand().id()))
-                .setStart(entity.start()).setEnd(entity.end()).setPriority(entity.priority()).setPrice(entity.price())
-                .setCurrency(entity.currency()));
+    public void save(PriceDTO dto) {
+        repository.save(new PriceEntity().setId(dto.id()).setBrand(new BrandEntity().setId(dto.brand().id()))
+                .setStart(dto.start()).setEnd(dto.end()).setPriority(dto.priority()).setPrice(dto.price())
+                .setCurrency(dto.currency()));
+    }
+
+    @Override
+    public void update(Long id, PriceDTO dto) {
+        Optional<PriceEntity> existingEntity = repository.findById(id);
+
+        if (existingEntity.isEmpty()) {
+            throw new PriceNotFoundException(id);
+        }
+
+        mapper.updatePriceFromDTO(dto, existingEntity.get());
+        repository.save(existingEntity.get());
     }
 
     @Override

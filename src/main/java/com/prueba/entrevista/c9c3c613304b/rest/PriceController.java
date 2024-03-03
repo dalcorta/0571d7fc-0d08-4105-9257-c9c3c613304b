@@ -29,34 +29,37 @@ public class PriceController {
 
     @GetMapping
     public ResponseEntity<Collection<PriceDTO>> getAll() {
-        return null;
+        return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<PriceDTO> getOne(@PathVariable(name = "id") Long id) {
-        return null;
+        return ResponseEntity.ok(service.findOne(id));
     }
 
     @GetMapping("/product-id/{product-id}")
-    public Collection<PriceDTO> getByProductID(@PathVariable(name = "product-id") Long productID,
+    public ResponseEntity<Collection<PriceDTO>> getByProductID(@PathVariable(name = "product-id") Long productID,
             @RequestParam(name = "start-date") LocalDateTime start, @RequestParam(name = "end-date") LocalDateTime end,
             @RequestParam("priority") Integer priority) {
-        return null;
+        return ResponseEntity.ok(service.findBy(productID, start, end, priority));
     }
 
     @PostMapping
     public ResponseEntity<PriceDTO> postRecord(@RequestBody PriceDTO entity) {
-        return null;
+        service.save(entity);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/id/{id}")
     public ResponseEntity<PriceDTO> putMethodName(@PathVariable(name = "id") Long id, @RequestBody PriceDTO entity) {
-        return null;
+        service.update(id, entity);
+        return ResponseEntity.accepted().build();
     }
 
-    @DeleteMapping
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<PriceDTO> deleteOne(@PathVariable(name = "id") Long id) {
-        return null;
+        service.deleteOne(id);
+        return ResponseEntity.accepted().build();
     }
 
 }
