@@ -7,10 +7,16 @@ import org.springframework.stereotype.Service;
 
 import com.prueba.entrevista.c9c3c613304b.dtos.PriceDTO;
 import com.prueba.entrevista.c9c3c613304b.dtos.ProductDTO;
+import com.prueba.entrevista.c9c3c613304b.repositories.PriceRepository;
 import com.prueba.entrevista.c9c3c613304b.services.PriceService;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class PriceServiceJPAImpl implements PriceService {
+
+    private final PriceRepository repository;
 
     @Override
     public Collection<PriceDTO> findAll() {
