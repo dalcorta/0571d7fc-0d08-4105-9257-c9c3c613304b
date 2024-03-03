@@ -15,9 +15,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @AllArgsConstructor
-@Table(name = "brand")
+@Table(name = "product")
 @EqualsAndHashCode(callSuper = false)
-public class Brand extends AbstractEntity {
+public class ProductEntity extends AbstractEntity {
 
     @Id
     @GeneratedValue
@@ -25,9 +25,9 @@ public class Brand extends AbstractEntity {
     private Integer id;
 
     @Column(name = "description")
-    private String description;
+    private String decription;
 
-    @OneToMany(mappedBy = "brand")
-    private Set<Price> prices;
+    @OneToMany(mappedBy = "product")
+    private Set<PriceEntity> prices;
 
 }

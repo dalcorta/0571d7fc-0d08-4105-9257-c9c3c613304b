@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 @Table(name = "price")
 @EqualsAndHashCode(callSuper = false)
-public class Price extends AbstractEntity{
+public class PriceEntity extends AbstractEntity{
 
     @Id
     @GeneratedValue
@@ -30,7 +30,7 @@ public class Price extends AbstractEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
-    private Brand brand;
+    private BrandEntity brand;
 
     @Column(name = "start_date")
     private LocalDateTime start;
@@ -40,7 +40,7 @@ public class Price extends AbstractEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-    private Product product;
+    private ProductEntity product;
 
     @Column(name = "priority")
     private Integer priority;
