@@ -21,12 +21,12 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 @Table(name = "price")
 @EqualsAndHashCode(callSuper = false)
-public class PriceEntity extends AbstractEntity{
+public class PriceEntity extends AbstractEntity {
 
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")

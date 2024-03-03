@@ -33,12 +33,12 @@ public class PriceController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<PriceDTO> getOne(@PathVariable(name = "id") Integer id) {
+    public ResponseEntity<PriceDTO> getOne(@PathVariable(name = "id") Long id) {
         return null;
     }
 
     @GetMapping("/product-id/{product-id}")
-    public Collection<PriceDTO> getByProductID(@PathVariable(name = "product-id") Integer productID,
+    public Collection<PriceDTO> getByProductID(@PathVariable(name = "product-id") Long productID,
             @RequestParam(name = "start-date") LocalDateTime start, @RequestParam(name = "end-date") LocalDateTime end,
             @RequestParam("priority") Integer priority) {
         return null;
@@ -50,13 +50,13 @@ public class PriceController {
     }
 
     @PutMapping("/id/{id}")
-    public ResponseEntity<PriceDTO> putMethodName(@PathVariable(name = "id") String id, @RequestBody PriceDTO entity) {
+    public ResponseEntity<PriceDTO> putMethodName(@PathVariable(name = "id") Long id, @RequestBody PriceDTO entity) {
         return null;
     }
 
     @DeleteMapping
-    public ResponseEntity<PriceDTO> deleteOne(@PathVariable(name = "id") String id) {
+    public ResponseEntity<PriceDTO> deleteOne(@PathVariable(name = "id") Long id) {
         return null;
     }
-    
+
 }

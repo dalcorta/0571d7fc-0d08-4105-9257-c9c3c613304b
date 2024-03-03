@@ -22,7 +22,7 @@ public class BrandEntity extends AbstractEntity {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "description")
     private String description;

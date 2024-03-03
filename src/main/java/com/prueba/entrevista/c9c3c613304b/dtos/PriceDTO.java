@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Currency;
 
-public record PriceDTO(Integer id, BrandDTO brand, LocalDateTime start, LocalDateTime end, ProductDTO product,
+public record PriceDTO(Long id, BrandDTO brand, LocalDateTime start, LocalDateTime end, ProductDTO product,
         Integer priority, BigDecimal price, Currency currency) {
 
 }

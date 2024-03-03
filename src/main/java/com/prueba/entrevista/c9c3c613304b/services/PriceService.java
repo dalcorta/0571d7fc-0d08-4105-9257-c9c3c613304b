@@ -10,12 +10,12 @@ public interface PriceService {
 
     Collection<PriceDTO> findAll();
 
-    PriceDTO findOne(Integer id);
+    PriceDTO findOne(Long id);
 
-    Collection<PriceDTO> findBy(Integer productID, LocalDateTime start, LocalDateTime end, Integer priority);
+    Collection<PriceDTO> findBy(Long productID, LocalDateTime start, LocalDateTime end, Integer priority);
 
     void save(ProductDTO entity);
 
-    void deleteOne(Integer id);
+    void deleteOne(Long id);
 
 }
