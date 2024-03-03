@@ -9,14 +9,14 @@ public interface PriceService {
 
     Collection<PriceDTO> findAll();
 
-    PriceDTO findOne(Long id);
+    PriceDTO findOne(long id);
 
-    Collection<PriceDTO> findBy(Long productID, LocalDateTime start, LocalDateTime end, Integer priority);
+    Collection<PriceDTO> findBy(long productID, LocalDateTime start, LocalDateTime end, Integer priority);
 
-    void save(PriceDTO dto);
+    PriceDTO save(PriceDTO dto);
 
-    void update(Long id, PriceDTO dto);
+    PriceDTO update(long id, PriceDTO dto);
 
-    void deleteOne(Long id);
+    void deleteOne(long id);
 
 }

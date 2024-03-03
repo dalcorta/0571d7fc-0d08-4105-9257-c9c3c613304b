@@ -7,10 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.prueba.entrevista.c9c3c613304b.dtos.BrandDTO;
 import com.prueba.entrevista.c9c3c613304b.dtos.PriceDTO;
-import com.prueba.entrevista.c9c3c613304b.dtos.ProductDTO;
-import com.prueba.entrevista.c9c3c613304b.entities.BrandEntity;
 import com.prueba.entrevista.c9c3c613304b.entities.PriceEntity;
 import com.prueba.entrevista.c9c3c613304b.exceptions.PriceNotFoundException;
 import com.prueba.entrevista.c9c3c613304b.repositories.PriceRepository;
@@ -41,27 +38,28 @@ public class PriceServiceJPAImpl implements PriceService {
     @Override
     public Collection<PriceDTO> findAll() {
         return repository.findAll().stream().map(entity -> new PriceDTO(entity.getId(),
-                new BrandDTO(entity.getBrand().getId(), entity.getBrand().getDescription()), entity.getStart(),
-                entity.getEnd(), new ProductDTO(entity.getProduct().getId(), entity.getProduct().getDecription()),
-                entity.getPriority(), entity.getPrice(), entity.getCurrency())).collect(Collectors.toList());
+                entity.getBrand().getId(), entity.getStart(),
+                entity.getEnd(), entity.getProduct().getId(),
+                entity.getPriority(), entity.getPrice(), entity.getCurrency().getCurrencyCode()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public PriceDTO findOne(Long id) {
+    public PriceDTO findOne(long id) {
         Optional<PriceEntity> existingEntity = repository.findById(id);
 
         if (existingEntity.isEmpty()) {
             throw new PriceNotFoundException(id);
         }
-        
+
         return existingEntity.map(entity -> new PriceDTO(entity.getId(),
-                new BrandDTO(entity.getBrand().getId(), entity.getBrand().getDescription()), entity.getStart(),
-                entity.getEnd(), new ProductDTO(entity.getProduct().getId(), entity.getProduct().getDecription()),
-                entity.getPriority(), entity.getPrice(), entity.getCurrency())).get();
+                entity.getBrand().getId(), entity.getStart(),
+                entity.getEnd(), entity.getProduct().getId(),
+                entity.getPriority(), entity.getPrice(), entity.getCurrency().getCurrencyCode())).get();
     }
 
     @Override
-    public Collection<PriceDTO> findBy(Long productID, LocalDateTime start, LocalDateTime end, Integer priority) {
+    public Collection<PriceDTO> findBy(long productID, LocalDateTime start, LocalDateTime end, Integer priority) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<PriceEntity> query = cb.createQuery(PriceEntity.class);
         Root<PriceEntity> root = query.from(PriceEntity.class);
@@ -86,20 +84,25 @@ public class PriceServiceJPAImpl implements PriceService {
 
         query.where(predicate);
         return entityManager.createQuery(query).getResultStream().map(entity -> new PriceDTO(entity.getId(),
-                new BrandDTO(entity.getBrand().getId(), entity.getBrand().getDescription()), entity.getStart(),
-                entity.getEnd(), new ProductDTO(entity.getProduct().getId(), entity.getProduct().getDecription()),
-                entity.getPriority(), entity.getPrice(), entity.getCurrency())).collect(Collectors.toList());
+                entity.getBrand().getId(), entity.getStart(),
+                entity.getEnd(), entity.getProduct().getId(),
+                entity.getPriority(), entity.getPrice(), entity.getCurrency().getCurrencyCode()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void save(PriceDTO dto) {
-        repository.save(new PriceEntity().setId(dto.id()).setBrand(new BrandEntity().setId(dto.brand().id()))
-                .setStart(dto.start()).setEnd(dto.end()).setPriority(dto.priority()).setPrice(dto.price())
-                .setCurrency(dto.currency()));
+    public PriceDTO save(PriceDTO dto) {
+        PriceEntity entity = new PriceEntity();
+        mapper.updatePriceFromDTO(dto, entity);
+        entity = repository.save(entity);
+        return new PriceDTO(entity.getId(), entity.getBrand().getId(), entity.getStart(), entity.getEnd(),
+                entity.getProduct().getId(), entity.getPriority(), entity.getPrice(),
+                entity.getCurrency().getCurrencyCode());
     }
 
     @Override
-    public void update(Long id, PriceDTO dto) {
+    @SuppressWarnings("null")
+    public PriceDTO update(long id, PriceDTO dto) {
         Optional<PriceEntity> existingEntity = repository.findById(id);
 
         if (existingEntity.isEmpty()) {
@@ -108,10 +111,16 @@ public class PriceServiceJPAImpl implements PriceService {
 
         mapper.updatePriceFromDTO(dto, existingEntity.get());
         repository.save(existingEntity.get());
+        return new PriceDTO(existingEntity.get().getId(), existingEntity.get().getBrand().getId(),
+                existingEntity.get().getStart(),
+                existingEntity.get().getEnd(),
+                existingEntity.get().getProduct().getId(), existingEntity.get().getPriority(),
+                existingEntity.get().getPrice(),
+                existingEntity.get().getCurrency().getCurrencyCode());
     }
 
     @Override
-    public void deleteOne(Long id) {
+    public void deleteOne(long id) {
         repository.deleteById(id);
     }
 

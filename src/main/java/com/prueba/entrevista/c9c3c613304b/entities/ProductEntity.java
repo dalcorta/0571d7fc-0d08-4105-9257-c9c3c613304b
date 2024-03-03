@@ -8,14 +8,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Data
 @Entity
 @Table(name = "product")
 @EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@AllArgsConstructor
 @Accessors(chain = true)
 public class ProductEntity extends AbstractEntity {
 
