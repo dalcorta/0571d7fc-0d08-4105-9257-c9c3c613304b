@@ -1,4 +1,4 @@
-package com.prueba.entrevista.c9c3c613304b.controllers;
+package com.prueba.entrevista.c9c3c613304b.rest;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
