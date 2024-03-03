@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.prueba.entrevista.c9c3c613304b.records.PriceRecord;
+import com.prueba.entrevista.c9c3c613304b.dtos.PriceDTO;
 import com.prueba.entrevista.c9c3c613304b.services.PriceService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,34 +28,34 @@ public class PriceController {
     private final PriceService service;
 
     @GetMapping
-    public ResponseEntity<Collection<PriceRecord>> getAll() {
+    public ResponseEntity<Collection<PriceDTO>> getAll() {
         return null;
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<PriceRecord> getOne(@PathVariable(name = "id") Integer id) {
+    public ResponseEntity<PriceDTO> getOne(@PathVariable(name = "id") Integer id) {
         return null;
     }
 
     @GetMapping("/product-id/{product-id}")
-    public Collection<PriceRecord> getByProductID(@PathVariable(name = "product-id") Integer productID,
+    public Collection<PriceDTO> getByProductID(@PathVariable(name = "product-id") Integer productID,
             @RequestParam(name = "start-date") LocalDateTime start, @RequestParam(name = "end-date") LocalDateTime end,
             @RequestParam("priority") Integer priority) {
         return null;
     }
 
     @PostMapping
-    public ResponseEntity<PriceRecord> postRecord(@RequestBody PriceRecord entity) {
+    public ResponseEntity<PriceDTO> postRecord(@RequestBody PriceDTO entity) {
         return null;
     }
 
     @PutMapping("/id/{id}")
-    public ResponseEntity<PriceRecord> putMethodName(@PathVariable(name = "id") String id, @RequestBody PriceRecord entity) {
+    public ResponseEntity<PriceDTO> putMethodName(@PathVariable(name = "id") String id, @RequestBody PriceDTO entity) {
         return null;
     }
 
     @DeleteMapping
-    public ResponseEntity<PriceRecord> deleteOne(@PathVariable(name = "id") String id) {
+    public ResponseEntity<PriceDTO> deleteOne(@PathVariable(name = "id") String id) {
         return null;
     }
     

@@ -3,18 +3,18 @@ package com.prueba.entrevista.c9c3c613304b.services;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
-import com.prueba.entrevista.c9c3c613304b.records.PriceRecord;
-import com.prueba.entrevista.c9c3c613304b.records.ProductRecord;
+import com.prueba.entrevista.c9c3c613304b.dtos.PriceDTO;
+import com.prueba.entrevista.c9c3c613304b.dtos.ProductDTO;
 
 public interface PriceService {
 
-    Collection<PriceRecord> findAll();
+    Collection<PriceDTO> findAll();
 
-    PriceRecord findOne(Integer id);
+    PriceDTO findOne(Integer id);
 
-    Collection<PriceRecord> findBy(Integer productID, LocalDateTime start, LocalDateTime end, Integer priority);
+    Collection<PriceDTO> findBy(Integer productID, LocalDateTime start, LocalDateTime end, Integer priority);
 
-    void save(ProductRecord entity);
+    void save(ProductDTO entity);
 
     void deleteOne(Integer id);
 
