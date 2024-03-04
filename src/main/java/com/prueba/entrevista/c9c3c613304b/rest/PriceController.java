@@ -39,21 +39,20 @@ public class PriceController {
 
     @GetMapping("/product-id/{product-id}")
     public ResponseEntity<Collection<PriceDTO>> getByProductID(@PathVariable(name = "product-id") Long productID,
-            @RequestParam(name = "start-date") LocalDateTime start, @RequestParam(name = "end-date") LocalDateTime end,
-            @RequestParam("priority") Integer priority) {
+            @RequestParam(name = "start-date", required = false) LocalDateTime start,
+            @RequestParam(name = "end-date", required = false) LocalDateTime end,
+            @RequestParam(name = "priority", required = false) Integer priority) {
         return ResponseEntity.ok(service.findBy(productID, start, end, priority));
     }
 
     @PostMapping
     public ResponseEntity<PriceDTO> postRecord(@RequestBody PriceDTO entity) {
-        service.save(entity);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(service.save(entity));
     }
 
     @PutMapping("/id/{id}")
     public ResponseEntity<PriceDTO> putMethodName(@PathVariable(name = "id") Long id, @RequestBody PriceDTO entity) {
-        service.update(id, entity);
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.ok(service.update(id, entity));
     }
 
     @DeleteMapping("/id/{id}")

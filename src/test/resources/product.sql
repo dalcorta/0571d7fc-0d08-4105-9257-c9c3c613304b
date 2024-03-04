@@ -1,0 +1,1 @@
+INSERT INTO product (id, description) VALUES(35455, 'Remera');
